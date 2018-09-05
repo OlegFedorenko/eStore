@@ -3,9 +3,15 @@
 {% block title %}Страница товара{% endblock %}
 
 {% block body %}
-    <h1>Товар c id: {{ product_id }}</h1>
-    <a href="{{ path('homepage') }}">to main</a><br>
-    <a href="{{ path('about') }}">About</a>
+    <h1>{{ product.name }}</h1>
+    <p>{{ product.description }}</p>
+    <p>Price: {{ product.price }}</p>
+    {% if product.isTop %}
+    <p>TOP SALES!</p>
+    {% endif %}
+
+    <p><a href="{{ path('homepage') }}">Main page</a></p>
+    <p><a href="{{ path('about') }}">About</a></p>
 
 {% endblock %}
 
