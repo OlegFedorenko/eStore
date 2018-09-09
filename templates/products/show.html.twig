@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Страница товара{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 
 {% block body %}
     <h1>{{ product.name }}</h1>
@@ -10,7 +10,6 @@
     <p>TOP SALES!</p>
     {% endif %}
 
-    <p><a href="{{ path('homepage') }}">Main page</a></p>
     <p><a href="{{ path('about') }}">About</a></p>
 
 {% endblock %}

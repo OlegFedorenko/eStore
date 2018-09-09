@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Category;
 use App\Entity\Product;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,10 +20,16 @@ class Products
      */
     private $repo;
 
+    /**
+     * @var EntityRepository
+     */
+    private $repoC;
+
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
         $this->repo = $this->em->getRepository(Product::class);
+        $this->repoC = $this->em->getRepository(Category::class);
     }
 
     /**
@@ -48,4 +55,21 @@ class Products
     {
         return $this->repo->findBy(['isTop' => true], ['name' => 'ASC'], 20);
     }
+
+    /**
+     * @return Category[]
+     */
+    public function getAllCategory()
+    {
+        return $this->repoC->findAll();
+    }
+
+    /**
+     * @return Category[]
+     */
+    public function getCategoryById($id): ?Category
+    {
+        return $this->repoC->find($id);
+    }
+
 }
