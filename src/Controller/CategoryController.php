@@ -28,6 +28,6 @@ class CategoryController extends AbstractController
      */
     public function show(Category $category, Products $productsService)
     {
-        return $this->render('categories/show.html.twig',['categories'=> $category]);
+        return $this->render('categories/show.html.twig',['category'=> $category]);
     }
 }
