@@ -23,13 +23,13 @@ class Products
     /**
      * @var EntityRepository
      */
-    private $categoryRepo;
+    private $categoriesRepo;
 
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
         $this->repo = $this->em->getRepository(Product::class);
-        $this->categoryRepo = $this->em->getRepository(Category::class);
+        $this->categoriesRepo = $this->em->getRepository(Category::class);
     }
 
     /**
@@ -61,7 +61,7 @@ class Products
      */
     public function getAllCategory()
     {
-        return $this->categoryRepo->findAll();
+        return $this->categoriesRepo->findAll();
     }
 
     /**
@@ -69,7 +69,7 @@ class Products
      */
     public function getCategoryById($id): ?Category
     {
-        return $this->categoryRepo->find($id);
+        return $this->categoriesRepo->find($id);
     }
 
 }
