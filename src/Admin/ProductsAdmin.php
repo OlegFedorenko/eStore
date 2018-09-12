@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: oleg
- * Date: 10.09.18
- * Time: 20:39
- */
 
 namespace App\Admin;
-
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -48,5 +41,4 @@ class ProductsAdmin extends AbstractAdmin
             ->add('category')
         ;
     }
-
 }
