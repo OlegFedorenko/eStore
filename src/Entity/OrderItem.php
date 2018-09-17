@@ -18,46 +18,41 @@ class OrderItem
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $product_id;
-
-    /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default:0"})
      */
     private $quantity;
 
     /**
-     * @ORM\Column(type="decimal", precision=12, scale=2)
+     * @ORM\Column(type="decimal", precision=12, scale=2, options={"default:0"})
      */
     private $price;
 
     /**
-     * @ORM\Column(type="decimal", precision=12, scale=2)
+     * @ORM\Column(type="decimal", precision=12, scale=2, options={"default:0"})
      */
-    private $amount;
+    private $cost;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="orderItems")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
      * @ORM\JoinColumn(nullable=true)
      */
     private $order;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="order")
+     */
+    private $product;
+
+    public function __construct()
+    {
+        $this->quantity = 0;
+        $this->price = 0;
+        $this->cost = 0;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getProductId(): ?int
-    {
-        return $this->product_id;
-    }
-
-    public function setProductId(int $product_id): self
-    {
-        $this->product_id = $product_id;
-
-        return $this;
     }
 
     public function getQuantity(): ?int
@@ -84,26 +79,38 @@ class OrderItem
         return $this;
     }
 
-    public function getAmount()
+    public function getCost()
     {
-        return $this->amount;
+        return $this->cost;
     }
 
-    public function setAmount($amount): self
+    public function setCost($cost): self
     {
-        $this->amount = $amount;
+        $this->cost = $cost;
 
         return $this;
     }
 
     public function getOrder(): ?int
     {
-        return $this->order_id;
+        return $this->order;
     }
 
-    public function setOrder(int $order_id): self
+    public function setOrder(int $order): self
     {
-        $this->order_id = $order_id;
+        $this->order = $order;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }

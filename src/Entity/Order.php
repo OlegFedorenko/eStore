@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Order
 {
+    const STATUS_NEW=1;
+    const STATUS_ORDERED=2;
+    const STATUS_SENT=3;
+    const STATUS_RECEIVED=4;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -25,33 +29,32 @@ class Order
     private $created_at;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer", options={"default:1"})
      */
-    private $order_status;
+    private $status;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default:false"})
      */
-    private $payment_status;
+    private $isPaid;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $user_id;
-
-    /**
-     * @ORM\Column(type="decimal", precision=12, scale=2)
+     * @ORM\Column(type="decimal", precision=12, scale=2, options={"default:0"})
      */
     private $amount;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order")
      */
-    private $orderItems;
+    private $items;
 
     public function __construct()
     {
-        $this->orderItems = new ArrayCollection();
+        $this->created_at = \DateTime();
+        $this->status = self::STATUS_NEW;
+        $this->isPaid = false;
+        $this->amount = 0;
+        $this->items = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,38 +74,26 @@ class Order
         return $this;
     }
 
-    public function getOrderStatus(): ?string
+    public function getStatus(): ?string
     {
-        return $this->order_status;
+        return $this->status;
     }
 
-    public function setOrderStatus(string $order_status): self
+    public function setStatus(string $status): self
     {
-        $this->order_status = $order_status;
+        $this->status = $status;
 
         return $this;
     }
 
-    public function getPaymentStatus(): ?bool
+    public function getIsPaid(): ?bool
     {
-        return $this->payment_status;
+        return $this->isPaid;
     }
 
-    public function setPaymentStatus(bool $payment_status): self
+    public function setIsPaid(bool $isPaid): self
     {
-        $this->payment_status = $payment_status;
-
-        return $this;
-    }
-
-    public function getUserId(): ?int
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(int $user_id): self
-    {
-        $this->user_id = $user_id;
+        $this->isPaid = $isPaid;
 
         return $this;
     }
@@ -122,15 +113,15 @@ class Order
     /**
      * @return Collection|OrderItem[]
      */
-    public function getOrderItems(): Collection
+    public function getItems(): Collection
     {
-        return $this->orderItems;
+        return $this->items;
     }
 
     public function addOrderItem(OrderItem $orderItem): self
     {
-        if (!$this->orderItems->contains($orderItem)) {
-            $this->orderItems[] = $orderItem;
+        if (!$this->items->contains($orderItem)) {
+            $this->items[] = $orderItem;
             $orderItem->setOrder($this);
         }
 
@@ -139,8 +130,8 @@ class Order
 
     public function removeOrderItem(OrderItem $orderItem): self
     {
-        if ($this->orderItems->contains($orderItem)) {
-            $this->orderItems->removeElement($orderItem);
+        if ($this->items->contains($orderItem)) {
+            $this->items->removeElement($orderItem);
             // set the owning side to null (unless already changed)
             if ($orderItem->getOrder() === $this) {
                 $orderItem->setOrder(null);

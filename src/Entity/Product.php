@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,11 +44,17 @@ class Product
      */
     private $category;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="product")
+     */
+    private $order;
+
     public function __construct()
     {
         $this->name = '';
         $this->price = 0;
         $this->isTop = false;
+        $this->order = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,5 +125,36 @@ class Product
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection|OrderItem[]
+     */
+    public function getOrder(): Collection
+    {
+        return $this->order;
+    }
+
+    public function addOrderr(OrderItem $orderr): self
+    {
+        if (!$this->order->contains($orderr)) {
+            $this->order[] = $orderr;
+            $orderr->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderr(OrderItem $orderr): self
+    {
+        if ($this->order->contains($orderr)) {
+            $this->order->removeElement($orderr);
+            // set the owning side to null (unless already changed)
+            if ($orderr->getProduct() === $this) {
+                $orderr->setProduct(null);
+            }
+        }
+
+        return $this;
     }
 }
