@@ -6,3 +6,9 @@ fos_user:
   from_email:
     address: noreply@eshop.com
     sender_name: "HR"
+
+  registration:
+      confirmation:
+          enabled: true
+      form:
+          type: App\Form\RegistrationType
