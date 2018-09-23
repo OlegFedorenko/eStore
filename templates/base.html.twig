@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}eShop{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         {% block stylesheets %}{% endblock %}
@@ -48,8 +48,9 @@
                 <ul class="navbar-nav">
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <li class="nav-item">
-                           <span class="navbar-text">
-                               {{ 'layout.logged_in_as'|trans({'%username%': app.user.firstname}, 'FOSUserBundle') }}
+                           <span class="navbar-text" style="padding-left: 10px">
+                               {#{{ 'layout.logged_in_as'|trans({'%username%': app.user.firstname}, 'FOSUserBundle') }}#}
+                               <a href="{{ path('fos_user_profile_show') }}"><b>{{app.user.firstname}} {{app.user.lastname}}</b></a>
                            </span>
                         </li>
                         <li class="nav-item">
