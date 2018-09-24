@@ -67,6 +67,13 @@ class OrderItem
         return $this;
     }
 
+    public function addQuantity(int $quantity)
+    {
+        $this->quantity += $quantity;
+
+        return $this;
+    }
+
     public function getPrice()
     {
         return $this->price;
@@ -96,7 +103,7 @@ class OrderItem
         return $this->order;
     }
 
-    public function setOrder(int $order): self
+    public function setOrder(Order $order): self
     {
         $this->order = $order;
 

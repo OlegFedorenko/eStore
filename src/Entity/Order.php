@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ORM\Entity()
@@ -44,13 +45,13 @@ class Order
     private $amount;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order")
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order", indexBy="product_id", cascade={"persist"})
      */
     private $items;
 
     public function __construct()
     {
-        $this->created_at = \DateTime();
+        $this->created_at = new \DateTime();
         $this->status = self::STATUS_NEW;
         $this->isPaid = false;
         $this->amount = 0;
@@ -118,7 +119,7 @@ class Order
         return $this->items;
     }
 
-    public function addOrderItem(OrderItem $orderItem): self
+    public function addItem(OrderItem $orderItem): self
     {
         if (!$this->items->contains($orderItem)) {
             $this->items[] = $orderItem;
@@ -128,7 +129,7 @@ class Order
         return $this;
     }
 
-    public function removeOrderItem(OrderItem $orderItem): self
+    public function removeItem(OrderItem $orderItem): self
     {
         if ($this->items->contains($orderItem)) {
             $this->items->removeElement($orderItem);

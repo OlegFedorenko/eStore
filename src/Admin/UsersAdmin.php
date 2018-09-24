@@ -32,7 +32,6 @@ class UsersAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form)
     {
         $form
-        ->add('id')
         ->add('firstName')
         ->add('lastName')
         ->add('email')
