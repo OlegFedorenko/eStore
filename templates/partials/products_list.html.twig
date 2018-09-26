@@ -6,8 +6,8 @@
                 <h5 class="card-title">{{ product.name }}</h5>
                 <p class="card-text">{{ product.description }}</p>
                 <p class="card-text">{{ product.price }} UAH</p>
-                <a href="{{ path('products_show', {'id': product.id}) }}" class="btn btn-info">More info</a>
-                <a href="{{ path('orders_add_to_cart', {'id': product.id, 'quantity': 1}) }}" class="btn btn-primary">Add to cart</a>
+                <a href="{{ path('products_show', {'id': product.id}) }}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
+                <a href="{{ path('orders_add_to_cart', {'id': product.id, 'quantity': 1}) }}" class="btn btn-primary js-add-to-cart"><i class="fas fa-cart-plus"></i></a>
             </div>
         </div>
     </div>

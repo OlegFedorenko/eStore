@@ -45,7 +45,10 @@ class Order
     private $amount;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order", indexBy="product_id", cascade={"persist"})
+     * @var OrderItem[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order",
+     *     indexBy="product_id", cascade={"persist"})
      */
     private $items;
 
@@ -119,26 +122,39 @@ class Order
         return $this->items;
     }
 
-    public function addItem(OrderItem $orderItem): self
+    public function addItem(OrderItem $item): self
     {
-        if (!$this->items->contains($orderItem)) {
-            $this->items[] = $orderItem;
-            $orderItem->setOrder($this);
+        if (!$this->items->contains($item)) {
+            $this->items[] = $item;
+            $item->setOrder($this);
+            $this->calculateAmount();
         }
 
         return $this;
     }
 
-    public function removeItem(OrderItem $orderItem): self
+    public function removeItem(OrderItem $item): self
     {
-        if ($this->items->contains($orderItem)) {
-            $this->items->removeElement($orderItem);
+        if ($this->items->contains($item)) {
+            $this->items->removeElement($item);
+            $this->calculateAmount();
+
             // set the owning side to null (unless already changed)
-            if ($orderItem->getOrder() === $this) {
-                $orderItem->setOrder(null);
+            if ($item->getOrder() === $this) {
+                $item->setOrder(null);
             }
         }
 
         return $this;
+    }
+
+    public function calculateAmount()
+    {
+        $this->amount = 0;
+
+        foreach ($this->items as $item)
+        {
+            $this->amount += $item->getCost();
+        }
     }
 }

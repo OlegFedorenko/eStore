@@ -33,12 +33,15 @@ class OrderItem
     private $cost;
 
     /**
+     * @var Order
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
      * @ORM\JoinColumn(nullable=true)
      */
     private $order;
 
     /**
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="order")
      */
     private $product;
@@ -63,6 +66,7 @@ class OrderItem
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
+        $this->calculateCost();
 
         return $this;
     }
@@ -70,6 +74,7 @@ class OrderItem
     public function addQuantity(int $quantity)
     {
         $this->quantity += $quantity;
+        $this->calculateCost();
 
         return $this;
     }
@@ -82,6 +87,7 @@ class OrderItem
     public function setPrice($price): self
     {
         $this->price = $price;
+        $this->calculateCost();
 
         return $this;
     }
@@ -118,7 +124,18 @@ class OrderItem
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+        $this->setPrice($product->getPrice());
 
         return $this;
+    }
+
+    public function calculateCost()
+    {
+        $this->cost = $this->price * $this->quantity;
+
+        if ($this->order)
+        {
+            $this->order->calculateAmount();
+        }
     }
 }

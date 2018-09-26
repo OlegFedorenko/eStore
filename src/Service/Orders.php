@@ -58,7 +58,7 @@ class Orders
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
-    private function getCartFromSession():Order
+    public function getCartFromSession():Order
     {
         $orderId = $this->session->get(self::CART_SESSION_NAME);
 

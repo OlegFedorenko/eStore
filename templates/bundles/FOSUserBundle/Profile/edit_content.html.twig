@@ -8,8 +8,7 @@
     {{ form_row(form.lastName) }}
     {{ form_row(form.email) }}
     {{ form_row(form.address) }}
-
-    {{ form_widget(form) }}
+    {{ form_row(form.current_password) }}
 
 <div>
     <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
