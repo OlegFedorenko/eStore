@@ -91,4 +91,5 @@ class Orders
         $this->em->flush();
         $this->session->set(self::CART_SESSION_NAME, $order->getId());
     }
+
 }

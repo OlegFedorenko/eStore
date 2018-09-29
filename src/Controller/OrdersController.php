@@ -53,4 +53,17 @@ class OrdersController extends AbstractController
 
         return $this->render('orders/cart_in_header.html.twig', ['cart' => $cart]);
     }
+
+    /**
+     * @Route("orders/cart", name="orders_cart")
+     */
+    public function cart(Orders $orders)
+    {
+        $cart = $orders->getCartFromSession();
+        $items = $orders->getCartFromSession()->getItems();
+
+        return $this->render('orders/cart.html.twig',
+            ['cart' => $cart,
+                'items' => $items]);
+    }
 }

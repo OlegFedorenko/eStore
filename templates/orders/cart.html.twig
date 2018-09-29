@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block body %}
+
+    <style>
+        tr.head{
+            text-align: center;
+            font-weight: bold;
+        }
+
+        td.total{
+            text-align: right;
+            font-weight: bold;
+        }
+
+        td.totalC{
+            text-align: center;
+            font-weight: bold;
+        }
+
+        td.numbs {
+            text-align: center;
+        }
+    </style>
+
+    <h2>ORDER #{{ cart.id }}</h2>
+
+    <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr class="head">
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Cost</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for item in items %}
+            <tr>
+                <td>{{ item.product }}</td>
+                <td class="numbs">{{ item.price }}</td>
+                <td class="numbs">{{ item.quantity }}</td>
+                <td class="numbs">{{ item.cost }}</td>
+            </tr>
+        {% endfor %}
+
+        <tr>
+            <td  colspan="3" class="total"><strong>Total:</strong></td>
+            <td class="totalC"><strong>{{ cart.amount }}</strong></td>
+        </tr>
+        </tbody>
+    </table>
+
+{% endblock %}
+
+
+
+
+
+
+
+
