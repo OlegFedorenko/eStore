@@ -9,7 +9,7 @@ jQuery(function ($) {
        $loadingmask.show();
 
        $.get($me.attr('href'), function (data) {
-           $('js-cart-in-header').html(data);
+           $('.js-cart-in-header').html(data);
            $loadingmask.hide();
        })
    })

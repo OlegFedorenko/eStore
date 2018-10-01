@@ -1,5 +1,8 @@
 {% trans_default_domain 'FOSUserBundle' %}
+
 <div class="container">
+    <h3>Log in</h3>
+
     <div class="form-row">
     <div class="form-group col-md-3">
         {% if error %}
@@ -9,7 +12,7 @@
     </div></div>
 
 </div>
-<div class="container"  style="padding-top: 15px">
+<div class="container">
     <form action="{{ path("fos_user_security_check") }}" method="post">
         {% if csrf_token %}
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
@@ -18,7 +21,7 @@
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label class="sr-only" for="username">{{ 'security.login.username'|trans }}</label>
-                <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter your name" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
+                <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter your email" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
             </div>
         </div>
 
