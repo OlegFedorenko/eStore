@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -49,12 +50,24 @@ class Product
      */
     private $order;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ProductImage",
+     *     mappedBy="product",
+     *     orphanRemoval=true,
+     *     cascade={"persist"})
+     *
+     * @ORM\OrderBy({"position" = "ASC"})
+     *
+     */
+    private $images;
+
     public function __construct()
     {
         $this->name = '';
         $this->price = 0;
         $this->isTop = false;
         $this->order = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -152,6 +165,37 @@ class Product
             // set the owning side to null (unless already changed)
             if ($orderr->getProduct() === $this) {
                 $orderr->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProductImage[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(ProductImage $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(ProductImage $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getProduct() === $this) {
+                $image->setProduct(null);
             }
         }
 
