@@ -3,12 +3,27 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block body %}
+
     <h1>{{ product.name }}</h1>
-    <p>{{ product.description }}</p>
-    <p>Price: {{ product.price }}</p>
-    {% if product.isTop %}
-    <p>TOP SALES!</p>
-    {% endif %}
+
+    <div class="row">
+        <div class="col-sm">
+            {% if product.images.first %}
+                <img src="{{ vich_uploader_asset(product.images.first, 'imageFile') | imagine_filter('product_detail') }}" alt="{{ product.name }}">
+            {% else %}
+                <img src="//placehold.it/500x500" alt="{{ product.name }}">
+            {% endif %}
+        </div>
+        <div class="col-sm">
+            <p>{{ product.description }}</p>
+            <p>Price: {{ product.price }}</p>
+
+            {% if product.isTop %}
+                <p>TOP SALES!</p>
+            {% endif %}
+
+        </div>
+    </div>
 
     <p><a href="{{ path('about') }}">About</a></p>
 

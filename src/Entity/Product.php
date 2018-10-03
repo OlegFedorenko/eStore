@@ -201,4 +201,24 @@ class Product
 
         return $this;
     }
+
+    public function getShortDescription(): ?string
+    {
+        if (mb_strlen($this->description) <= 50)
+        {
+            return $this->description;
+        }
+
+        $short = mb_substr($this->description, 0, 50);
+        $spacePosition = mb_strpos($short, ' ');
+
+        if ($spacePosition === false)
+        {
+            return $short.'...';
+        }
+
+        $short = mb_substr($short, 0, $spacePosition);
+
+        return $short.'...';
+    }
 }

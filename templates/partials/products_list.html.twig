@@ -1,17 +1,16 @@
 {% for product in products %}
-    <div class="col-sm-3">
+    <div class="col-sm-3" style="padding-bottom: 15px; padding-top: 15px" >
         <div class="card">
             <div class="card-img-top">
                 {% if product.images.first %}
-                    <img class="card-img-top" src="{{ vich_uploader_asset(product.images.first, 'imageFile') }}" alt="{{ product.name }}">
+                    <img class="card-img-top" src="{{ vich_uploader_asset(product.images.first, 'imageFile') | imagine_filter('squared_thumbnail')}}" alt="{{ product.name }}">
                 {% else %}
                     <img class="card-img-top" src="//placehold.it/100x100" alt="{{ product.name }}">
                 {% endif %}
             </div>
-
             <div class="card-body">
                 <h5 class="card-title">{{ product.name }}</h5>
-                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text">{{ product.shortDescription}}</p>
                 <p class="card-text">{{ product.price }} UAH</p>
                 <a href="{{ path('products_show', {'id': product.id}) }}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                 <a href="{{ path('orders_add_to_cart', {'id': product.id, 'quantity': 1}) }}" class="btn btn-primary js-add-to-cart"><i class="fas fa-cart-plus"></i></a>

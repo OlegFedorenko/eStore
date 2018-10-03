@@ -216,6 +216,6 @@ class ProductImage
             ->getValidator()
             ->inContext($context)
             ->atPath('imageFile')
-            ->validate($this->fileName, $constraint, [Constraint::DEFAULT_GROUP]);
+            ->validate($this->fileName ?: $this->imageFile, $constraint, [Constraint::DEFAULT_GROUP]);
     }
 }
