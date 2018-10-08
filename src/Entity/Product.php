@@ -57,7 +57,6 @@ class Product
      *     cascade={"persist"})
      *
      * @ORM\OrderBy({"position" = "ASC"})
-     *
      */
     private $images;
 

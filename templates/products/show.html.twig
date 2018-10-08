@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <h1>{{ product.name }}</h1>
+    <h1 style="padding-top: 15px">{{ product.name }}</h1>
 
     <div class="row">
         <div class="col-sm">
@@ -16,16 +16,12 @@
         </div>
         <div class="col-sm">
             <p>{{ product.description }}</p>
-            <p>Price: {{ product.price }}</p>
-
+            <p><strong>Price: {{ product.price }}</strong></p>
             {% if product.isTop %}
                 <p>TOP SALES!</p>
             {% endif %}
-
         </div>
     </div>
-
-    <p><a href="{{ path('about') }}">About</a></p>
 
 {% endblock %}
 

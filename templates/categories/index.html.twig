@@ -3,10 +3,24 @@
 {% block title %}All Categories{% endblock %}
 
 {% block body %}
-    {% for category in categories %}
-        {{ category.id }}<a href="{{ path('category_show', {'id': category.id}) }}"> {{ category.name }}</a>
-        <br>
-    {% endfor %}
+    <div class="row">
+        {% for category in categories %}
+            <div class="col-sm-3" style="padding-bottom: 15px; padding-top: 15px" >
+                <div class="card">
+                    <div class="card-img-top">
+                        {% if category.images.first %}
+                            <img class="card-img-top" src="{{ vich_uploader_asset(category.images.first, 'imageFile') | imagine_filter('categories_list')}}" alt="{{ category.name }}">
+                        {% else %}
+                            <img class="card-img-top" src="//placehold.it/100x100" alt="{{ category.name }}">
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{{ path('category_show', {'id': category.id}) }}"> {{ category.name }}</a></h5>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
 
 
