@@ -104,7 +104,7 @@ class OrderItem
         return $this;
     }
 
-    public function getOrder(): ?int
+    public function getOrder(): ?Order
     {
         return $this->order;
     }

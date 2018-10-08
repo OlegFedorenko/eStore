@@ -15,7 +15,7 @@
             font-weight: bold;
         }
 
-        td.totalC{
+        td.js-order-amount{
             text-align: center;
             font-weight: bold;
         }
@@ -24,8 +24,12 @@
             text-align: center;
         }
 
+        td.js-item-cost {
+            text-align: center;
+        }
+
         h2.orderNumb {
-            padding-top: 15px";
+            padding-top: 15px
         }
     </style>
 
@@ -40,20 +44,23 @@
             <th scope="col">Cost</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="cart-table">
 
-        {% for item in items %}
-            <tr>
+        {% for item in cart.items %}
+            <tr data-item-id="{{ item.id }}">
                 <td>{{ item.product }}</td>
                 <td class="numbs">{{ item.price }}</td>
-                <td class="numbs">{{ item.quantity }} </td>
-                <td class="numbs">{{ item.cost }}</td>
+                <td class="numbs">
+                    <input class="js-item-quantity" name="quantity" type="number" min="1" value="{{ item.quantity }}"
+                           data-update-url="{{ path('orders_update_item_quantity', {'id': item.id} )}}">
+                </td>
+                <td class="js-item-cost">{{ item.cost|localizedcurrency('UAH') }}</td>
             </tr>
         {% endfor %}
 
         <tr>
             <td  colspan="3" class="total"><strong>Total:</strong></td>
-            <td class="totalC"><strong>{{ cart.amount }}</strong></td>
+            <td class="js-order-amount"><strong>{{ cart.amount|localizedcurrency('UAH') }}</strong></td>
         </tr>
         </tbody>
     </table>
