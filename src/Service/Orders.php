@@ -106,20 +106,4 @@ class Orders
         $this->session->set(self::CART_SESSION_NAME, $order->getId());
     }
 
-    /**
-     * @param OrderItem $item
-     * @return Order
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function removeItem(OrderItem $item): Order
-    {
-        $order = $item->getOrder();
-        $order->removeItem($item);
-        $this->em->remove($item);
-        $this->em->flush();
-
-        return $order;
-    }
-
 }

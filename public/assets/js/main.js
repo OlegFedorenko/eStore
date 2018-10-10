@@ -19,23 +19,9 @@ jQuery(function ($) {
 
        $me.find('.js-item-quantity').on('input', function () {
            var $input = $(this),
-               data = {},
-               value = parseInt($input.val()),
-               min = parseInt($input.attr('min')),
-               max = parseInt($input.attr('max'));
+               data = {};
 
-           if ($input.val() === ''){
-               value = min;
-           } else {
-               if (isNaN(value || value < min)) {
-                   value = min;
-               } else if (value > max){
-                   value = max;
-               }
-                   $input.val(value);
-           }
-
-           data[$input.attr('name')] = value;
+           data[$input.attr('name')] = $input.val();
            $.post($input.data('update-url'), data)
                .done(updateCart)
                .fail(function () {
@@ -43,18 +29,6 @@ jQuery(function ($) {
                    //document.location.reload();
                });
        });
-
-       $me.find('.js-remove-item').on('click', function (event) {
-           var $a = $(this);
-
-           event.preventDefault();
-
-           if (confirm('Really?')){
-               $a.closest('tr').remove();
-               $.post(this.href).done(updateCart);
-           }
-       });
-
 
        function updateCart(cartData) {
            updateCartInHeader();

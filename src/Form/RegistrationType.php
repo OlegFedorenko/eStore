@@ -19,7 +19,6 @@ class RegistrationType extends AbstractType
             ->remove('username')
             ->add('firstName', null, ['label' => 'label.firstName'])
             ->add('lastName', null, ['label' => 'label.lastName'])
-            ->add('phone', null, ['label' => 'label.phone'])
             ->add('address', null, ['label' => 'label.address']);
 //        ->add('firstName', null, ['label' => 'First Name'])
 //        ->add('lastName', null, ['label' => 'Last Name'])
