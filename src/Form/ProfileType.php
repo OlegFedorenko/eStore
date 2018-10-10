@@ -18,6 +18,7 @@ class ProfileType extends AbstractType
             ->remove('username')
             ->add('firstName', null, ['label' => 'label.firstName'])
             ->add('lastName', null, ['label' => 'label.lastName'])
+            ->add('phone', null, ['label' => 'label.phone'])
             ->add('address', null, ['label' => 'label.address']);
     }
 }

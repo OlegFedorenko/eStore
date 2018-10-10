@@ -31,11 +31,15 @@
         h2.orderNumb {
             padding-top: 15px
         }
+
+        input.js-item-quantity {
+            text-align: center;
+        }
     </style>
 
     <h2 class="orderNumb" >ORDER #{{ cart.id }}</h2>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered" style="table-layout: fixed;">
         <thead class="thead-light">
         <tr class="head">
             <th scope="col">Name</th>
@@ -51,10 +55,11 @@
                 <td>{{ item.product }}</td>
                 <td class="numbs">{{ item.price }}</td>
                 <td class="numbs">
-                    <input class="js-item-quantity" name="quantity" type="number" min="1" value="{{ item.quantity }}"
-                           data-update-url="{{ path('orders_update_item_quantity', {'id': item.id} )}}">
+                    <input class="js-item-quantity" name="quantity" type="number" min="1" max="1000" value="{{ item.quantity }}"
+                           data-update-url="{{ path('orders_update_item_quantity', {'id': item.id}) }}">
                 </td>
                 <td class="js-item-cost">{{ item.cost|localizedcurrency('UAH') }}</td>
+                <td><a class="js-remove-item" href="{{ path('orders_remove_item', {'id': item.id}) }}" title="Remove"><i class="fas fa-trash"></i></a></td>
             </tr>
         {% endfor %}
 
