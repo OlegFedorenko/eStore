@@ -32,7 +32,7 @@ jQuery(function ($) {
 
        function updateCart(cartData) {
            updateCartInHeader();
-           $me.find('js-order-amount').html(cartData.amount);
+           $me.find('.js-order-amount').html(cartData.amount);
 
            $.each(cartData.items, function (itemId, itemCost) {
 
