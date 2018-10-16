@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\Product;
+use App\Form\MakeOrderType;
 use App\Service\Orders;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Tests\Compiler\J;
@@ -38,7 +39,7 @@ class OrdersController extends AbstractController
      */
     public function addToCart(Product $product, Orders $orders, Request $request, $quantity = 1)
     {
-        $orders->addToCart($product, $quantity);
+        $orders->addToCart($product, $this->getUser(), $quantity);
 
         if ($request->isXmlHttpRequest())
         {
@@ -55,7 +56,7 @@ class OrdersController extends AbstractController
      */
     public function cartInHeader(Orders $orders)
     {
-        $cart = $orders->getCartFromSession();
+        $cart = $orders->getCartFromSession($this->getUser());
 
         return $this->render('orders/cart_in_header.html.twig', ['cart' => $cart]);
     }
@@ -67,7 +68,7 @@ class OrdersController extends AbstractController
      */
     public function cart(Orders $orders)
     {
-        $cart = $orders->getCartFromSession();
+        $cart = $orders->getCartFromSession($this->getUser());
 
         return $this->render('orders/cart.html.twig', ['cart' => $cart]);
 
@@ -111,4 +112,52 @@ class OrdersController extends AbstractController
 
     }
 
+
+    /**
+     * @Route("/cart/checkout", name="orders_checkout")
+     * @throws
+     */
+    public function checkout(Orders $orders, Request $request)
+    {
+        $cart = $orders->getCartFromSession($this->getUser());
+        $form = $this->createForm(MakeOrderType::class, $cart);
+        $form->handleRequest($request);
+
+        if ($cart->getAmount()>0) //ПРОВЕРКА НАЛИЧИЯ ТОВАРОВ В КОРЗИНЕ
+        {
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                $orders->checkout($cart);
+
+                return $this->redirectToRoute('orders_success');
+            }
+
+            return $this->render('orders/checkout.html.twig', [
+                'cart' => $cart,
+                'form' => $form->createView(),
+            ]);
+        }
+
+        else //ЕСЛИ ПРОВЕРКА НАЛИЧИЯ ТОВАРОВ НЕ ПРОШЛА
+        {
+            return $this->redirectToRoute('orders_empty_cart');
+        }
+
+    }
+
+    /**
+     * @Route("/orders/success", name="orders_success")
+     */
+    public function success()
+    {
+        return $this->render('orders/success.html.twig');
+    }
+
+    /**
+     * @Route("/orders/empty_cart", name="orders_empty_cart")
+     */
+    public function emptyCard() //РЕНДЕРИМ СТРАНИЦУ ДЛЯ ПУСТОЙ КОРЗИНЫ
+    {
+        return $this->render('orders/empty_cart.html.twig');
+    }
 }

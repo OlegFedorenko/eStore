@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -54,26 +55,35 @@ class Order
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"makeOrder"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"makeOrder"})
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Email(groups={"makeOrder"}, checkMX=true)
+     * Assert\NotBlank(groups={"makeOrder"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"makeOrder"})
+     * @Assert\Regex(groups={"makeOrder"}, pattern="/^\+\d{12}$/",
+     *     message="Please enter correct phone format +380507896341")
+     *
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"makeOrder"})
      */
     private $address;
 
@@ -262,9 +272,7 @@ class Order
             $this->firstName = $user->getFirstName();
             $this->lastName = $user->getLastName();
             $this->email = $user->getEmail();
-
             $this->phone = $user->getPhone();
-
             $this->address = $user->getAddress();
 
         }

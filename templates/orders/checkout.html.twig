@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cart{% endblock %}
+{% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block title %}Checkout{% endblock %}
 
 {% block body %}
 
@@ -15,7 +17,7 @@
             font-weight: bold;
         }
 
-        td.js-order-amount{
+        td.amount{
             text-align: center;
             font-weight: bold;
         }
@@ -24,20 +26,16 @@
             text-align: center;
         }
 
-        td.js-item-cost {
+        td.cost {
             text-align: center;
         }
 
         h2.orderNumb {
             padding-top: 15px
         }
-
-        input.quantity {
-            text-align: center;
-        }
     </style>
 
-    <h2 class="orderNumb" >ORDER #{{ cart.id }}</h2>
+    <h2 class="orderNumb" >Checkout order #{{ cart.id }}</h2>
 
     <table class="table table-bordered" style="table-layout: fixed;">
         <thead class="thead-light">
@@ -51,26 +49,31 @@
         <tbody id="cart-table">
 
         {% for item in cart.items %}
-            <tr data-item-id="{{ item.id }}">
+            <tr>
                 <td>{{ item.product }}</td>
                 <td class="numbs">{{ item.price }}</td>
-                <td class="numbs">
-                    <input class="js-item-quantity" name="quantity" type="number" min="1" max="1000" value="{{ item.quantity }}"
-                           data-update-url="{{ path('orders_update_item_quantity', {'id': item.id}) }}">
-                </td>
-                <td class="js-item-cost">{{ item.cost|localizedcurrency('UAH') }}</td>
-                <td><a class="js-remove-item" href="{{ path('orders_remove_item', {'id': item.id}) }}" title="Remove"><i class="fas fa-trash"></i></a></td>
+                <td class="numbs">{{ item.quantity }}</td>
+                <td class="cost">{{ item.cost|localizedcurrency('UAH') }}</td>
             </tr>
         {% endfor %}
 
         <tr>
             <td  colspan="3" class="total"><strong>Total:</strong></td>
-            <td class="js-order-amount"><strong>{{ cart.amount|localizedcurrency('UAH') }}</strong></td>
+            <td class="amount"><strong>{{ cart.amount|localizedcurrency('UAH') }}</strong></td>
         </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('orders_checkout') }}" class="btn btn-primary">Process >> </a>
+    {{ form_start(form, {'attr':{'novalidate':'novalidate'}}) }}
+    {{ form_widget(form) }}
+
+    <div class="form-group row">
+        <div class="col-sm-10 offset-sm-2">
+            <button type="submit" class="btn btn-primary">Process!</button>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
 
 {% endblock %}
 

@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Your cart is empty!{% endblock %}
+
+{% block body %}
+    <h3>Your cart is empty! Choose something and try again :)</h3>
+
+    <p><a href="{{ path('homepage') }}" class="btn btn-primary">Continue shopping</a> </p>
+{% endblock %}
