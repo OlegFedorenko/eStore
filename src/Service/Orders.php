@@ -145,9 +145,6 @@ class Orders
         $this->em->flush();
 
         $this->mailer->send($this->adminEmail, 'orders/admin.email.twig', ['order' => $order]);
-
-        $this->removeCart();
-
     }
 
     /**
@@ -162,9 +159,14 @@ class Orders
         $this->session->set(self::CART_SESSION_NAME, $order->getId());
     }
 
-    private function removeCart()
+    public function removeCart()
     {
         $this->session->remove(self::CART_SESSION_NAME);
     }
 
+    public function setPaid(Order $order)
+    {
+        $order->setIsPaid(true);
+        $this->em->flush();
+    }
 }

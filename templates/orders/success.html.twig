@@ -3,9 +3,21 @@
 {% block title %}Success!{% endblock %}
 
 {% block body %}
-    <h3>Thank you! We call you soon!</h3>
 
-    <p><a href="{{ path('homepage') }}" class="btn btn-primary">Continue shopping</a> </p>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    {{ paymentButton|raw }}
+
+    <p>
+        <a href="{{ path('homepage') }}" class="btn btn-primary">Continue shopping</a>
+    </p>
+
 {% endblock %}
 
 
