@@ -144,10 +144,7 @@ class Orders
         $order->setStatus(Order::STATUS_ORDERED);
         $this->em->flush();
 
-        $this->mailer->send($this->adminEmail, 'orders/admin.email.twig', [
-            'order' => $order,
-            'cart' => $this->getCartFromSession($order->getUser()),
-        ]);
+        $this->mailer->send($this->adminEmail, 'orders/admin.email.twig', ['order' => $order]);
 
         $this->removeCart();
 

@@ -1,41 +1,66 @@
 {% block subject %}  {% endblock %}
 
 {% block body %}
-    <p>Order #{{ cart.id }} complete</p>
+
+    <style>
+        table{
+            border-collapse: collapse;
+        }
+
+        th{
+            text-align: center;
+            font-weight: bold;
+        }
+
+        td.total{
+            text-align: right;
+            font-weight: bold;
+        }
+
+        td.amount{
+            text-align: center;
+            font-weight: bold;
+        }
+
+        td.numbs {
+            text-align: center;
+        }
+
+        h2.orderNumb {
+            padding-top: 15px
+        }
+    </style>
+
+    <h2 class="orderNumb">Order #{{ order.id }} complete</h2>
 
     <h4>Customer info:</h4>
 
-    <p>{{ cart.firstname }} {{ cart.lastname }}</p>
-    <p>{{ cart.email }}</p>
-    <p>{{ cart.phone }}</p>
-    <p>{{ cart.address }}</p>
+    <p>{{ order.firstname }} {{ order.lastname }}</p>
+    <p>{{ order.email }}</p>
+    <p>{{ order.phone }}</p>
+    <p>{{ order.address }}</p>
 
     <h4>Order info:</h4>
 
-    <table border="1" style="border-collapse: collapse" cellpadding="10">
+    <table border="1" cellpadding="10">
         <tr>
             <th>Name</th>
             <th>Price</th>
             <th>Quantity</th>
             <th>Cost</th>
         </tr>
-            {% for item in cart.items %}
+            {% for item in order.items %}
                 <tr>
                     <td>{{ item.product }}</td>
-                    <td>{{ item.price|localizedcurrency('UAH')  }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>{{ item.cost|localizedcurrency('UAH') }}</td>
+                    <td class="numbs">{{ item.price|localizedcurrency('UAH')  }}</td>
+                    <td class="numbs">{{ item.quantity }}</td>
+                    <td class="numbs">{{ item.cost|localizedcurrency('UAH') }}</td>
                 </tr>
             {% endfor %}
         <tr>
-            <td  colspan="3" style="text-align: right"><strong>Total:</strong></td>
-            <td><strong>{{ cart.amount|localizedcurrency('UAH') }}</strong></td>
+            <td class="total" colspan="3"><strong>Total:</strong></td>
+            <td class="amount">{{ order.amount|localizedcurrency('UAH') }}</td>
         </tr>
     </table>
-
-
-
-
-
 
 {% endblock %}
