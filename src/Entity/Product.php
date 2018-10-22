@@ -203,13 +203,13 @@ class Product
 
     public function getShortDescription(): ?string
     {
-        if (mb_strlen($this->description) <= 50)
+        if (mb_strlen($this->description) <= 80)
         {
             return $this->description;
         }
 
-        $short = mb_substr($this->description, 0, 50);
-        $spacePosition = mb_strpos($short, ' ');
+        $short = mb_substr($this->description, 0, 80);
+        $spacePosition = mb_strrpos($short, ' ');
 
         if ($spacePosition === false)
         {
@@ -218,6 +218,6 @@ class Product
 
         $short = mb_substr($short, 0, $spacePosition);
 
-        return $short.'...';
+        return $short;
     }
 }

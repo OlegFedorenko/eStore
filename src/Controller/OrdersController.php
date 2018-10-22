@@ -70,7 +70,15 @@ class OrdersController extends AbstractController
     {
         $cart = $orders->getCartFromSession($this->getUser());
 
-        return $this->render('orders/cart.html.twig', ['cart' => $cart]);
+        if ($cart->getAmount() > 0) //ПРОВЕРКА НАЛИЧИЯ ТОВАРОВ В КОРЗИНЕ
+        {
+            return $this->render('orders/cart.html.twig', ['cart' => $cart]);
+        }
+
+        else //ЕСЛИ ПРОВЕРКА НАЛИЧИЯ ТОВАРОВ НЕ ПРОШЛА
+        {
+            return $this->redirectToRoute('orders_empty_cart');
+        }
 
     }
 

@@ -145,6 +145,7 @@ class Orders
         $this->em->flush();
 
         $this->mailer->send($this->adminEmail, 'orders/admin.email.twig', ['order' => $order]);
+        $this->mailer->send($order->getEmail(), 'orders/admin.email.twig', ['order' => $order]);
     }
 
     /**
