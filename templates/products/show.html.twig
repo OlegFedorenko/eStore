@@ -15,7 +15,7 @@
             {% endif %}
         </div>
         <div class="col-sm">
-            <p>{{ product.description }}</p>
+            <p>{{ product.description|raw }}</p>
             <p><strong>Price: {{ product.price }}</strong></p>
             {% if product.isTop %}
                 <p>TOP SALES!</p>

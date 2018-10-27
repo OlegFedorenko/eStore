@@ -36,7 +36,12 @@ class ProductsAdmin extends AbstractAdmin
     {
         $form
             ->add('name')
-            ->add('description')
+            ->add('description', null, [
+                'attr' => [
+                    'class' => 'tinymce',
+                    'style' => 'height: 200px',
+                ]
+            ])
             ->add('price')
             ->add('isTop')
             ->add('category')

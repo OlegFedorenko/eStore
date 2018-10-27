@@ -4,6 +4,10 @@ sonata_admin:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
     assets:
+        extra_javascripts:
+            - 'https://cloud.tinymce.com/stable/tinymce.min.js'
+            - 'assets/js/admin.js'
+
         extra_stylesheets:
             - 'assets/css/admin.css'
 

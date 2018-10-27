@@ -35,6 +35,6 @@ services:
 
     app.mainMenu:
         class: App\Menu\Builder
-        arguments: ["@knp_menu.factory"]
+        arguments: ["@knp_menu.factory", "@doctrine.orm.default_entity_manager"]
         tags:
             - { name: knp_menu.menu_builder, method: mainMenu, alias: main }
